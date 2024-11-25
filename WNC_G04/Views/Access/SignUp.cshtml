@@ -1,0 +1,175 @@
+﻿@{
+    Layout = null;
+}
+
+@model NguoiDung
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoodView - Sign Up</title>
+    <link rel="stylesheet" href="../LayoutTrangChu/sass/vender/bootstrap.min.css">
+    <link rel="stylesheet" href="../LayoutTrangChu/sass/main.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        .sign_up {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box; /* Đảm bảo phần tử bao quanh nội dung không tràn ra ngoài */
+        }
+
+        .log-on {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .logo h1 {
+            color: #ff6600;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+            .form-group input {
+                padding: 12px;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                width: 100%;
+                box-sizing: border-box; /* Đảm bảo input không tràn ra ngoài */
+            }
+
+                .form-group input:focus {
+                    border-color: #ff7f32;
+                    box-shadow: 0 0 5px rgba(255, 127, 50, 0.5);
+                }
+
+        .log_btn {
+            background-color: #ff7f32;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+            .log_btn:hover {
+                background-color: #ff6a1a;
+                cursor: pointer;
+            }
+
+        .sing-in p {
+            text-align: center;
+        }
+
+        .sing-in a {
+            color: #ff7f32;
+            text-decoration: none;
+        }
+
+            .sing-in a:hover {
+                text-decoration: underline;
+            }
+
+        .validation-summary-errors {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border-radius: 5px;
+            border: 1px solid #f5c6cb;
+            font-size: 14px;
+        }
+
+            .validation-summary-errors ul {
+                list-style-type: none;
+                padding-left: 0;
+            }
+
+            .validation-summary-errors li {
+                margin-bottom: 10px;
+            }
+
+        .text-danger {
+            font-size: 12px;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="sign_up">
+            <div class="content">
+                <div class="log-on">
+                    <div class="logo">
+                        <h1>GoodView</h1>
+                    </div>
+                    <p>Sign up to see photos and videos review from your friends.</p>
+                </div>
+
+                @using (Html.BeginForm("SignUp", "Access", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.TenNguoiDung, new { @class = "form-control", placeholder = "Username" })
+                        <span asp-validation-for="TenNguoiDung" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.Email, new { @type = "email", @class = "form-control", placeholder = "Email" })
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.MatKhau, new { @type = "password", @class = "form-control", placeholder = "Password" })
+                        <span asp-validation-for="MatKhau" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(x => x.ConfirmMatKhau, new { @class = "form-control", placeholder = "Confirm Password" })
+                        <span asp-validation-for="ConfirmMatKhau" class="text-danger"></span>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="log_btn">Sign Up</button>
+                    </div>
+                }
+
+                <div class="sing-in">
+                    <p>Have an account? <a asp-controller="Access" asp-action="LogIn">Log in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

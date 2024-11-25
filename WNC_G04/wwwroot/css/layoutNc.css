@@ -1,0 +1,333 @@
+* {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --black-color: #111111;
+}
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    /*    padding: 10px 20px;*/
+}
+
+.headerLogo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 30px 0 30px;
+}
+
+h1 {
+    font-size: 60px;
+    color: #D93900;
+    font-family: Adobe Arabic;
+}
+
+#iconlogout {
+    font-size: 30px;
+    padding-top: 10px;
+    color: var(--black-color)
+}
+
+hr {
+    margin-top: 78px;
+    border: none;
+    height: 1px;
+    background-color: #ddd;
+    width: 100%;
+}
+
+/* Container */
+.container {
+    /* Adjust this value to match the height of your header */
+    padding: 20px;
+    /* Optional padding for internal spacing */
+    box-sizing: border-box;
+}
+
+.header-navbar {
+    position: fixed;
+}
+
+.header-navbar_list {
+    margin-left: 90px;
+}
+
+    .header-navbar_list .navbar-items {
+        list-style: none;
+    }
+
+.navbar-items {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
+    display: block;
+    min-height: 50px;
+    line-height: 50px;
+    position: relative;
+    width: 100%;
+    margin: 20px 0 20px 0;
+    /* text-align: center; */
+}
+
+    .navbar-items:hover {
+        box-shadow: 1px 1px 3px #888888;
+        background-color: #fff;
+    }
+
+.navbar-link {
+    text-decoration: none;
+    font-size: 20px;
+    color: var(--black-color);
+}
+
+.xemthem {
+    margin-top: 80px;
+}
+
+.iconsize {
+    font-size: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.post {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin-right: 20px;
+}
+
+    .post img {
+        width: 100%;
+        border-radius: 8px;
+    }
+
+.post-info {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+    .post-info img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .post-info .name {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+.footer-comment {
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.iconsize2 {
+    font-size: 25px;
+    margin-left: 0px;
+    margin-right: 50px;
+}
+
+    .iconsize2:hover {
+        cursor: pointer;
+    }
+
+.save {
+    float: right;
+    margin-right: 20px;
+}
+
+.like {
+    font-size: 15px;
+    /* padding-right: 20px; */
+}
+
+.comment {
+    display: flex;
+    margin: 10px 0;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 10px;
+}
+
+/* Container ben trai */
+.related-articles {
+    background-color: #ffffff;
+    padding: 20px;
+    width: 100%;
+    position: fixed;
+}
+
+    .related-articles h3 {
+        font-weight: bold;
+        font-size: 15px;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+.infomation {
+    padding-bottom: 10px;
+}
+
+.related-articles ul {
+    padding: 0;
+    list-style: none;
+}
+
+.related-articles li {
+    display: flex;
+    margin-bottom: 15px;
+    transition: transform 0.2s;
+}
+
+    .related-articles li:hover {
+        transform: translateX(5px);
+        cursor: pointer;
+    }
+
+.related-articles img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+/* Style for the button */
+
+/* Style for the hidden menu */
+#showMoreBtn {
+    background-color: #fff;
+    border: none;
+    padding: 10px 20px 10px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 200px;
+    text-align: center;
+    margin-top: 80px;
+    border-radius: 5px;
+    position: relative;
+    /* Allow positioning of the menu relative to this button */
+}
+
+    #showMoreBtn:hover {
+        background-color: #ddd;
+    }
+
+/* Style for the hidden menu */
+.more-options {
+    display: none;
+    /* Initially hidden */
+    background-color: #fff;
+    position: absolute;
+    bottom: 45px;
+    width: 220px;
+    /* Set the width of the dropdown menu */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    /* padding: 10px; */
+    z-index: 999;
+}
+
+    .more-options ul {
+        list-style-type: none;
+    }
+
+        .more-options ul li {
+            background: #fff;
+            border-radius: 10px;
+            /*            box-shadow: 0 1px 1px rgba(0, 0, 0, .1);*/
+            display: block;
+            min-height: 50px;
+            line-height: 50px;
+            position: relative;
+            width: 100%;
+            /* margin: 20px 0 20px 0; */
+        }
+
+            .more-options ul li a {
+                text-decoration: none;
+                color: var(--black-color);
+                font-size: 16px;
+                width: 100%;
+                /*                padding-left: 10px;*/
+            }
+
+            .more-options ul li:hover {
+                box-shadow: 1px 1px 3px #888888;
+                background-color: #fff;
+                width: 100%;
+            }
+
+/* Comment */
+.form-control {
+    width: 100%;
+    /* Add padding for spacing */
+    border: none;
+    /* Remove the border */
+    border-radius: 0;
+    /* Remove rounded corners, making it rectangular */
+    font-size: 15px;
+    /* Font size for text */
+    color: #333;
+    /* Text color */
+    background-color: #f9f9f9;
+    /* Light background color */
+    box-sizing: border-box;
+    /* Include padding in width calculation */
+    transition: all 0.3s ease;
+    /* Smooth transition for focus effects */
+}
+
+    /* Focus state for input */
+    .form-control:focus {
+        background-color: #fff;
+        outline: none;
+    }
+
+    /* Placeholder styling */
+    .form-control::placeholder {
+        color: #888;
+ 
+        }
+
+
+@media (min-width:768px) and (max-width: 1023px) {
+    .header-navbar {
+        position: relative;
+    }
+
+    #showMoreBtn {
+        display: none;
+    }
+}
+
+@media(max-width:768px) {
+    .header-navbar {
+        position: relative;
+    }
+
+    #showMoreBtn {
+        display: none;
+    }
+}

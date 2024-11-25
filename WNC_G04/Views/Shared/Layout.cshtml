@@ -1,0 +1,213 @@
+﻿@inject WNC_G04.Service.IDataService DataService
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="~/layouttrangchu/sass/vender/bootstrap.css">
+    @* <link rel="stylesheet" href="~/LayoutTrangChu/sass/vender/bootstrap.min.css"> *@
+    @*      <link rel="stylesheet" href="~/LayoutTrangChu/owlcarousel/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/LayoutTrangChu/owlcarousel/owl.carousel.min.css"> *@
+    @*      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/emojione/assets/3.1/sprites/emojione-sprite-32.css"> *@
+     <link rel="stylesheet" href="~/LayoutTrangChu/sass/main.css">
+    <link rel="stylesheet" href="~/css/create.css" />
+
+    <link rel="stylesheet" href="~/css/grid.css">
+    <link rel="stylesheet" href="~/css/layoutNC.css">
+    <link rel="stylesheet" href="~/css/fontawesome-free-6.5.1-web/fontawesome-free-6.5.1-web/css/all.min.css">
+
+
+</head>
+
+<body>
+    <header>
+        <div class="headerLogo">
+            <a style="text-decoration: none;" href="" class="linklogo">
+                <h1> GoodView</h1>
+            </a>
+            <div class="dangxuat">
+                <a href="" class="linklogout">
+                    <i id="iconlogout" class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+    <hr>
+    <div class="container">
+        <div class="">
+            <div class="row">
+                <div class=" col l-3 m-12 c-12">
+                    <div class="header-navbar">
+                        <ul class="header-navbar_list">
+                            <li class="navbar-items">
+                                <i class="fa-solid fa-house iconsize"></i>
+                                <a asp-controller="TrangChu " asp-action="ListBaiViet" class="navbar-link">Trang chủ</a>
+                            </li>
+                            <li class="navbar-items">
+                                <i class="fa-solid fa-magnifying-glass iconsize"></i>
+                                <a class="navbar-link">Tìm kiếm</a>
+                            </li>
+                            <li class="navbar-items">
+                                <i class="fa-solid fa-table-list iconsize"></i>
+                                <a class="navbar-link">Khám phá</a>
+
+                            </li>
+                            <li class="navbar-items">
+                                <i class="fa-regular fa-heart iconsize"></i>
+                                <a class="navbar-link">Thông báo</a>
+
+                            </li>
+                            <li class="navbar-items">
+                                <i class="fa-solid fa-plus iconsize"></i>
+                                <a data-bs-toggle="modal" data-bs-target="#create_modal" href="" class="navbar-link">Tạo</a>
+
+                            </li>
+                            <li class="navbar-items">
+                                <a class="linkuser">
+                                    <i class="fa-regular fa-circle iconsize "></i>
+                                </a>
+                                <a href="" class="navbar-link">Trang cá nhân</a>
+                            </li>
+                            <button style="font-size: 18px; color:" id="showMoreBtn">
+                                Xem Thêm
+                            </button>
+                            <div id="moreOptions" class="more-options">
+                                <ul>
+                                    <li><a href="#">Cài đặt</a></li>
+                                    <li><a href="#">Hoạt động của bạn</a></li>
+                                    <li><a href="#">Đã lưu</a></li>
+                                    <li><a href="#">Chuyển chế độ</a></li>
+                                    <li><a href="#">Báo cáo sự cố</a></li>
+                                    <li><a href="#">Chuyển tài khoản</a></li>
+                                    <li><a href="#">Đăng xuất</a></li>
+                                </ul>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <div class=" col l-6 m-12 c-12">
+
+                    @RenderBody()
+
+                    <div class="post">
+                        <div class="post-info">
+                            <img src="~/image/shisui.jpg" alt="User profile">
+                            <div>
+                                <p class="name">Henry</p>
+                                <div class="text-muted">25/10/2024 15:00:01 PM - Công nghệ</div>
+                            </div>
+                        </div>
+                        <img src="~/image/iphone.png" alt="Post Image">
+                        <div class="footer-comment">
+                            <a class="">
+                                <i class="fa-regular fa-heart iconsize2"></i>
+                            </a>
+                            <a class=""><i class="fa-regular fa-comment iconsize2"></i></i></a>
+                            <a class=""><i class="fa-regular fa-bookmark iconsize2 save"></i></a>
+                        </div>
+                        <b class="like"> 2like</b>
+                        <div class="comment">
+                            <p class="name">Henry</p>
+                            <p class="content">Iphone 15 năm nay đẹp quá :))</p>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Add comment...">
+                    </div>
+                </div>
+                <div class=" col l-3 m-12 c-12">
+                    <div class="related-articles">
+                        <h3>Related</h3>
+                        <ul>
+                            <li class="infomation">
+                                <img src="~/image/kamaha.jpg" alt="Article image">
+                                <div>
+                                    <p>
+                                        <strong>Kamala Harris Asks Americans: Are You Really Going to Elect a...</strong>
+                                    </p>
+                                    <small>54K upvotes · 3.3K comments</small>
+                                </div>
+                            </li>
+                            <li class="infomation">
+                                <img src="~/image/trump.jpg" alt="Article image">
+                                <div>
+                                    <p><strong>McDonald's is distancing itself from Donald Trump...</strong></p>
+                                    <small>44K upvotes · 3.8K comments</small>
+                                </div>
+                            </li>
+                            <li class="infomation">
+                                <img src="~/image/biden.png" alt="Article image">
+                                <div>
+                                    <p><strong>Kamala Harris town hall on CNN: Yes, I do think Trump...</strong></p>
+                                    <small>44K upvotes · 3.5K comments</small>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="create_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createPostModalLabel">Tạo Bài viết mới</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="user-info mb-3">
+                                <img src="@Context.Session.GetString("UrlAnhDD")" alt="Profile Picture">
+                                <span id="username">@Context.Session.GetString("tenND")</span>
+                            </div>
+                            <form id="post-form" style="overflow-x: hidden;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label style="margin-left:10px" for="image-upload" class="form-label">Chọn ảnh</label>
+                                            <input type="file" class="form-control" name="image" id="image-upload" accept="image/*" required>
+                                            <div class="mt-3 hide_img" id="image-container"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-section">
+                                            <div class="mb-3">
+                                                <label for="post-type" class="form-label">Chủ đề</label>
+                                                <select class="form-select" name="postType" id="post-type" required>
+                                                    <option value="" disabled selected>Chọn chủ đề</option>
+                                                    @foreach (var loai in @DataService.ChuDes())
+                                                    {
+                                                        <option value="@loai.MaChuDe">@loai.TenChuDe</option>
+                                                    }
+
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="post-content" class="form-label">Nội dung</label>
+                                                <textarea class="form-control" name="postContent" id="post-content" rows="4" placeholder="Nôi dung bài viết" required></textarea>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <button style="width:100%" id="btn_create" class="btn btn-primary w-100">Hoàn Thành</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="~/js/layout.js"></script>
+    <script src="~/js/TaoBaiViet.js"></script>
+    <script src="~/owlcarousel/jquery.min.js"></script>
+    <script src="~/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/LayoutTrangChu/owlcarousel/jquery.min.js"></script>
+    <script src="~/LayoutTrangChu/owlcarousel/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+
+</html>
