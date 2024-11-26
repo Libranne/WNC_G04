@@ -8,7 +8,18 @@
 
 @model IEnumerable<BaiViet>
 @Html.AntiForgeryToken()
+<style>
+    .bold {
+        font-weight: bold;
+        color: #007bff;
+        text-decoration: none;
+    }
 
+        .bold:hover {
+            text-decoration: underline;
+        }
+
+</style>
 <!--***** posts_container start ****** -->
 <div class="second_container">
     <div class="main_section">
@@ -84,8 +95,6 @@
             </div>
         </div>
     </div>
-    <!--***** followers_container end ****** -->
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

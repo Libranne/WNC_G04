@@ -1,4 +1,4 @@
-* {
+﻿* {
     box-sizing: inherit;
     margin: 0;
     padding: 0;
@@ -58,6 +58,7 @@ hr {
 
 .header-navbar {
     position: fixed;
+    left: 0; /* Sát bên trái */
 }
 
 .header-navbar_list {
