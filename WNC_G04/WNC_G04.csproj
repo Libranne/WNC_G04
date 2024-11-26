@@ -2132,11 +2132,7 @@
     <Content Remove="wwwroot\css\fontawesome-free-6.5.1-web\fontawesome-free-6.5.1-web\webfonts\fa-v4compatibility.woff2" />
     <Content Remove="wwwroot\css\grid.css" />
     <Content Remove="wwwroot\css\layoutNc.css" />
-    <Content Remove="wwwroot\image\biden.png" />
     <Content Remove="wwwroot\image\iphone.png" />
-    <Content Remove="wwwroot\image\kamaha.jpg" />
-    <Content Remove="wwwroot\image\shisui.jpg" />
-    <Content Remove="wwwroot\image\trump.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -4267,11 +4263,7 @@
     <None Include="wwwroot\css\fontawesome-free-6.5.1-web\fontawesome-free-6.5.1-web\webfonts\fa-v4compatibility.woff2" />
     <None Include="wwwroot\css\grid.css" />
     <None Include="wwwroot\css\layoutNc.css" />
-    <None Include="wwwroot\image\biden.png" />
-    <None Include="wwwroot\image\iphone.png" />
-    <None Include="wwwroot\image\kamaha.jpg" />
-    <None Include="wwwroot\image\shisui.jpg" />
-    <None Include="wwwroot\image\trump.jpg" />
+    <None Include="wwwroot\Post\img\iphone.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -4293,6 +4285,10 @@
     <Content Update="wwwroot\css\fontawesome-free-6.5.1-web\fontawesome-free-6.5.1-web\metadata\shims.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\image\" />
   </ItemGroup>
 
 </Project>

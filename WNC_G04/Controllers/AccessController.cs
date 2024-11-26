@@ -71,6 +71,7 @@ namespace WNC_G04.Controllers
                         // Đăng nhập thành công
                         HttpContext.Session.SetString("Email", user.Email);
                         HttpContext.Session.SetInt32("id", user.MaNguoiDung);
+                        HttpContext.Session.SetString("UrlAnhDD", user.AnhDaiDien);
                         HttpContext.Session.SetString("tenND", user.TenNguoiDung);
 
                         // Reset số lần đăng nhập sai
@@ -132,7 +133,6 @@ namespace WNC_G04.Controllers
                 var existingUserByUserName = _context.NguoiDungs
                     .FirstOrDefault(u => u.TenNguoiDung == model.TenNguoiDung);
 
-                // Thông báo lỗi nếu email hoặc tên người dùng đã tồn tại
                 if (existingUserByEmail != null)
                 {
                     ModelState.AddModelError("Email", "Email đã được sử dụng.");
@@ -143,18 +143,20 @@ namespace WNC_G04.Controllers
                     ModelState.AddModelError("TenNguoiDung", "Tên người dùng đã được sử dụng.");
                 }
 
-                // Nếu có lỗi trong ModelState, trả về lại View để hiển thị lỗi
+                // Kiểm tra và xử lý lỗi
                 if (!ModelState.IsValid)
                 {
                     return View(model);
                 }
 
-                // Kiểm tra mật khẩu và xác nhận mật khẩu có trùng khớp không
+                // Kiểm tra mật khẩu và xác nhận mật khẩu
                 if (model.MatKhau != model.ConfirmMatKhau)
                 {
                     ModelState.AddModelError("ConfirmMatKhau", "Mật khẩu và xác nhận mật khẩu không khớp.");
                     return View(model);
                 }
+
+             
 
                 var newUser = new NguoiDung
                 {
@@ -162,6 +164,7 @@ namespace WNC_G04.Controllers
                     Email = model.Email,
                     MatKhau = model.MatKhau,  // Mã hóa mật khẩu nếu cần
                     ConfirmMatKhau = model.ConfirmMatKhau,
+               AnhDaiDien = model.AnhDaiDien= "User\\img\\user.png",
                     NgayTao = DateTime.Now,
                     FailedLoginAttempts = 0  // Khởi tạo số lần đăng nhập sai
                 };
@@ -179,21 +182,16 @@ namespace WNC_G04.Controllers
                 }
             }
 
-            // Kiểm tra và hiển thị các lỗi ModelState nếu có
-            if (!ModelState.IsValid)
-            {
-                var errorMessages = string.Join(", ", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
-                Console.WriteLine($"Errors: {errorMessages}");
-            }
-
+            // Hiển thị lỗi nếu có
             return View(model);
         }
 
-        // public IActionResult LogOut()
-        // {
-        //     HttpContext.Session.Clear();
-        //     HttpContext.Session.Remove("Username");
-        //     return RedirectToAction("LogIn", "Access");
-        // }
+
+        public IActionResult LogOut()
+        {
+            HttpContext.Session.Clear();
+            HttpContext.Session.Remove("Username");
+            return RedirectToAction("LogIn", "Access");
+        }
     }
 }
