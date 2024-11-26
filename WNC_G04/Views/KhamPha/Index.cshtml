@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WNC_G04.Models.BaiViet>
+@{
+    ViewBag.Title = "Khám Phá";
+    Layout = "~/Views/Shared/Layout.cshtml";
+    var user = ViewBag.us;
+    var topics = ViewBag.Topics as IEnumerable<WNC_G04.Models.ChuDe>;
+    var comments = ViewBag.cmts as IEnumerable<WNC_G04.Models.BinhLuan>;
+    int? selectedTopicID = ViewBag.SelectedTopicID;
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Khám Phá</h2>
+    <div class="row">
+        <!-- Danh sách chủ đề -->
+        <div class="col-md-3">
+            <h4 class="sidebar-title">Chủ đề</h4>
+            <ul class="list-group topic-list">
+                @foreach (var topic in topics)
+                {
+                    <li class="list-group-item @(topic.MaChuDe == selectedTopicID ? "active" : "")">
+                        <a href="@Url.Action("Index", "KhamPha", new { MaChuDe = topic.MaChuDe })"
+                           class="text-decoration-none topic-link @(topic.MaChuDe == selectedTopicID ? "text-white" : "text-dark")">
+                            @topic.TenChuDe
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <!-- Danh sách bài viết -->
+        <div class="col-md-9">
+            @if (!Model.Any())
+            {
+                <p class="text-muted text-center">Không có bài viết nào trong chủ đề này.</p>
+            }
+            else
+            {
+                @Html.Partial("_PostListPartial", Model)
+            }
+        </div>
+    </div>
+</div>
