@@ -168,6 +168,7 @@
                                 <div class="menu-content" id="menuContent_@baiViet.MaBaiViet">
                                     <button onclick="editForm(@baiViet.MaBaiViet)">Sửa</button>
                                     <button onclick="deleteItem(@baiViet.MaBaiViet)">Xóa</button>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -213,7 +214,7 @@
                             }
                             } *@
                                 <div class="comment-section" data-mabaiviet="@baiViet.MaBaiViet" data-tennguoidung="@baiViet.MaNguoiDung">
-                                    <input type="text" class="commentInput" placeholder="Add a comment..." />
+                                    <input style="text-decoration:none" type="text" class="commentInput" placeholder="Add a comment..." />
                                 </div>
                             </div>
                         </div>
@@ -308,7 +309,7 @@
                 }
             });
         });
-    });
+
 
         $('.comment-section').on('keypress', '.commentInput', function (event) {
             if (event.key === 'Enter') {
@@ -334,6 +335,8 @@
                 });
             }
         });
+
+    });
 
    
     function showMenu(id) {
@@ -377,22 +380,7 @@
 
 
 
-    function editForm(maBaiViet) {
-        $.get('/TrangCaNhan/GetBaiVietData', { maBaiViet: maBaiViet }, function (data) {
-            $('#tenND').val(data.tenNguoiDung);
-            $('#tieuSu').val(data.tieuSu);
 
-            // Lưu dữ liệu gốc vào biến toàn cục hoặc hidden fields
-            originalData.tenND = data.tenNguoiDung;
-            originalData.tieuSu = data.tieuSu;
-
-            // Reset lại trạng thái nút
-            document.getElementById('saveChangesButton').disabled = true;
-
-            // Handle image preview
-            $('#imagePreview').html('<img src="' + data.imageUrl + '" class="img-thumbnail">');
-        });
-    }
     $('#editProfile').on('hidden.bs.modal', function () {
         const saveButton = document.getElementById('saveChangesButton');
         saveButton.disabled = true; // Disable button
@@ -422,23 +410,7 @@
     });
 
 
-    function deleteItem(maBaiViet) {
-        if (confirm('Are you sure you want to delete this post?')) {
-            $.ajax({
-                url: '/TrangCaNhan/DeleteBaiViet',
-                type: 'POST',
-                data: { maBaiViet: maBaiViet },
-                success: function (response) {
-                    if (response.success) {
-                        // Remove the post from the view
-                        $('#post-' + maBaiViet).remove();
-                    } else {
-                        alert('Failed to delete post.');
-                    }
-                }
-            });
-        }
-    }
+   
 
 
 </script>

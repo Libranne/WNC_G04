@@ -28,7 +28,12 @@ header {
     margin: 0 30px 0 30px;
 }
 
+    .headerLogo h1 {
+       margin-left:15px;
+      
+    }
 h1 {
+
     font-size: 60px;
     color: #D93900;
     font-family: Adobe Arabic;
@@ -313,22 +318,52 @@ hr {
         }
 
 
-@media (min-width:768px) and (max-width: 1023px) {
-    .header-navbar {
-        position: relative;
+
+.header-navbar {
+    position: fixed;
+ 
+    background: white;
+ 
+    z-index: 900; /* Đảm bảo menu luôn nằm dưới header */
+    transition: transform 0.3s ease-in-out;
+}
+
+    .header-navbar.hidden {
+        transform: translateX(-100%);
     }
 
-    #showMoreBtn {
-        display: none;
+.navbar-toggle {
+    display: none;
+    position: fixed;
+    top: 10px; /* Nút toggle nằm trong header */
+    left: 10px;
+    background: white;
+    border: none;
+    font-size: 35px;
+    z-index: 1000; /* Trên header để dễ bấm */
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .header-navbar {
+        transform: translateX(-100%);
+    }
+
+        .header-navbar.active {
+            transform: translateX(0);
+        }
+
+    .navbar-toggle {
+        display: block;
     }
 }
 
-@media(max-width:768px) {
-    .header-navbar {
-        position: relative;
-    }
-
-    #showMoreBtn {
-        display: none;
-    }
+header {
+    
+    background: white;
+    z-index: 1000; /* Cao hơn menu */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Tạo bóng cho header nếu cần */
 }
+
+
+
