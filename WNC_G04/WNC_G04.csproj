@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\image\**" />
+    <Content Remove="wwwroot\image\**" />
+    <EmbeddedResource Remove="wwwroot\image\**" />
+    <None Remove="wwwroot\image\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\css\fontawesome-free-6.5.1-web\fontawesome-free-6.5.1-web\css\all.css" />
     <Content Remove="wwwroot\css\fontawesome-free-6.5.1-web\fontawesome-free-6.5.1-web\css\all.min.css" />
     <Content Remove="wwwroot\css\fontawesome-free-6.5.1-web\fontawesome-free-6.5.1-web\css\brands.css" />
@@ -2132,7 +2139,6 @@
     <Content Remove="wwwroot\css\fontawesome-free-6.5.1-web\fontawesome-free-6.5.1-web\webfonts\fa-v4compatibility.woff2" />
     <Content Remove="wwwroot\css\grid.css" />
     <Content Remove="wwwroot\css\layoutNc.css" />
-    <Content Remove="wwwroot\image\iphone.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -4263,7 +4269,6 @@
     <None Include="wwwroot\css\fontawesome-free-6.5.1-web\fontawesome-free-6.5.1-web\webfonts\fa-v4compatibility.woff2" />
     <None Include="wwwroot\css\grid.css" />
     <None Include="wwwroot\css\layoutNc.css" />
-    <None Include="wwwroot\Post\img\iphone.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -4285,10 +4290,6 @@
     <Content Update="wwwroot\css\fontawesome-free-6.5.1-web\fontawesome-free-6.5.1-web\metadata\shims.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\image\" />
   </ItemGroup>
 
 </Project>

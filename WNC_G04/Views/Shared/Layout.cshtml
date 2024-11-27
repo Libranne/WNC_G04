@@ -68,6 +68,9 @@
     <div class="container">
         <div class="row">
             <div class="col l-3 m-12 c-12">
+                <div class="navbar-toggle">
+                    <i class="fa fa-bars"></i> <!-- Icon menu -->
+                </div>
                 <nav class="header-navbar">
                     <ul class="header-navbar_list">
                         <li class="navbar-items">
@@ -270,5 +273,11 @@
             });
         });
     });
-
+    $(document).ready(function () {
+        // Toggle sidebar visibility when the button is clicked
+        $('.navbar-toggle').on('click', function () {
+            $('.header-navbar').toggleClass('active');
+            $('body').toggleClass('menu-active'); // Disable body scroll when menu is active
+        });
+    });
 </script>
