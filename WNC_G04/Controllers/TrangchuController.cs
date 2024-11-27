@@ -93,9 +93,24 @@ namespace WNC_G04.Controllers
             };
             baiviet.SoLuongLike++;
             _context.Thiches.Add(thich);
+
+            if (baiviet.MaNguoiDung != uss.MaNguoiDung)
+            {
+               var thongBao = new ThongBao
+               {
+                    MaNguoiDung = baiviet.MaNguoiDung,
+                    NoiDung = $"{uss.TenNguoiDung} đã thích bài viết của bạn.",
+                    NgayTao = DateTime.Now,
+                    LoaiThongBao = "Thich",
+                    MaBaiViet = mabaiviet
+               };
+               _context.ThongBaos.Add(thongBao);
+            }
             _context.SaveChanges();
             return Json(new { success = true, newLikeCount = baiviet.SoLuongLike });
         }
+
+
 
     }
 
@@ -106,6 +121,16 @@ namespace WNC_G04.Controllers
         var currentUserEmail = HttpContext.Session.GetString("Email");
         var uss = _context.NguoiDungs
            .FirstOrDefault(t => t.Email == currentUserEmail);
+
+            //
+        var baiviet = _context.BaiViets
+              .FirstOrDefault(b => b.MaBaiViet == mabaiviet);
+        if (baiviet == null || uss == null)
+                return Json(new { success = false, message = "Bài viết hoặc người dùng không tồn tại." });
+
+
+
+
         var cmt = new BinhLuan
         {
             MaBaiViet = mabaiviet,
@@ -114,11 +139,27 @@ namespace WNC_G04.Controllers
         };
 
         _context.BinhLuans.Add(cmt);
-        _context.SaveChanges();
+
+            if (baiviet.MaNguoiDung != uss.MaNguoiDung)
+            {
+                var thongBao = new ThongBao
+                {
+                    MaNguoiDung = baiviet.MaNguoiDung,
+                    NoiDung = $"{uss.TenNguoiDung} đã bình luận về bài viết của bạn.",
+                    NgayTao = DateTime.Now,
+                    LoaiThongBao = "BinhLuan",
+                    MaBaiViet = mabaiviet
+                };
+                _context.ThongBaos.Add(thongBao);
+            }
+
+            _context.SaveChanges();
 
 
         return Json(new { success = true, tennguoidung = uss.TenNguoiDung });
 
     }
+        
+
     }
 }

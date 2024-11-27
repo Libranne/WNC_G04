@@ -1,0 +1,44 @@
+﻿@model List<WNC_G04.Models.ThongBao>
+
+@{
+    ViewData["Title"] = "Thông Báo";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<h2>Thông Báo Của Bạn</h2>
+
+<!-- Kiểm tra nếu có thông báo -->
+@if (Model != null && Model.Any())
+{
+    <div id="notificationArea" class="notification-area">
+        @foreach (var thongBao in Model)
+        {
+            <div class="notification-item @(thongBao.IsRead ? "read" : "unread")">
+                <p><strong>@thongBao.NoiDung</strong></p>
+                <p><small>@(thongBao.NgayTao.HasValue ? thongBao.NgayTao.Value.ToString("dd/MM/yyyy") : "Chưa có ngày tạo")</small></p>
+
+                <!-- Nếu thông báo chưa được đọc, hiển thị nút đánh dấu là đã đọc -->
+                @if (!thongBao.IsRead)
+                {
+                    <a href="@Url.Action("MarkAsRead", new { id = thongBao.MaThongBao })" class="btn btn-info">Đánh dấu đã đọc</a>
+                }
+                else
+                {
+                    <!-- Hiển thị thông báo đã đọc -->
+                    <span class="btn btn-success">Đã đọc</span>
+                }
+            </div>
+        }
+
+
+
+
+    </div>
+}
+else
+{
+    <p>Không có thông báo nào.</p>
+}
+
+
+<link rel="stylesheet" href="~/css/notifications.css">

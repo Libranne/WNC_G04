@@ -147,42 +147,48 @@ namespace WNC_G04.Controllers
         public IActionResult AddComment(int mabaiviet, string comment)
         {
             var currentUserEmail = HttpContext.Session.GetString("Email");
-            var currentUser = _context.NguoiDungs.FirstOrDefault(t => t.Email == currentUserEmail);
+            var currentUser = _context.NguoiDungs
+                .FirstOrDefault(t => t.Email == currentUserEmail);
             var baiviet = _context.BaiViets.FirstOrDefault(b => b.MaBaiViet == mabaiviet);
 
-            if (baiviet == null || currentUser == null) return Json(new { success = false });
+            if (baiviet == null || currentUser == null)
+                return Json(new { success = false, message = "Bài viết hoặc người dùng không tồn tại." });
 
-            var cmt = new BinhLuan
+            try
             {
-                MaBaiViet = mabaiviet,
-                MaNguoiDung = currentUser.MaNguoiDung,
-                NoiDung = comment,
-                NgayTao = DateTime.Now
-            };
-
-            _context.BinhLuans.Add(cmt);
-
-            if (baiviet.MaNguoiDung != currentUser.MaNguoiDung)
-            {
-                var thongBao = new ThongBao
+                var cmt = new BinhLuan
                 {
-                    MaNguoiDung = baiviet.MaNguoiDung,
-                    NoiDung = $"{currentUser.TenNguoiDung} đã bình luận về bài viết của bạn.",
-                    NgayTao = DateTime.Now,
-                    LoaiThongBao = "BinhLuan",
-                    MaBaiViet = mabaiviet
+                    MaBaiViet = mabaiviet,
+                    MaNguoiDung = currentUser.MaNguoiDung,
+                    NoiDung = comment,
+                    NgayTao = DateTime.Now
                 };
-                _context.ThongBaos.Add(thongBao);
+
+                _context.BinhLuans.Add(cmt);
+
+                if (baiviet.MaNguoiDung != currentUser.MaNguoiDung)
+                {
+                    var thongBao = new ThongBao
+                    {
+                        MaNguoiDung = baiviet.MaNguoiDung,
+                        NoiDung = $"{currentUser.TenNguoiDung} đã bình luận về bài viết của bạn.",
+                        NgayTao = DateTime.Now,
+                        LoaiThongBao = "BinhLuan",
+                        MaBaiViet = mabaiviet
+                    };
+                    _context.ThongBaos.Add(thongBao);
+                }
+
+                _context.SaveChanges();
+
+                return Json(new { success = true, tennguoidung = currentUser.TenNguoiDung });
             }
-
-            _context.SaveChanges();
-
-            return Json(new
+            catch (Exception ex)
             {
-                success = true,
-                tennguoidung = currentUser.TenNguoiDung
-            });
+                return Json(new { success = false, message = $"Lỗi: {ex.Message}" });
+            }
         }
+
 
         public IActionResult GetNotifications()
         {

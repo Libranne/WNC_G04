@@ -27,7 +27,7 @@
 
     /* Chủ đề đang được chọn */
     .topic-item.active {
-        background-color: #007bff;
+        background-color: #FF9933;
         color: white;
-        border-color: #0056b3;
+        border-color: #FF9900;
     }

@@ -1,0 +1,17 @@
+﻿.notification-item {
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    /* Màu nền cho thông báo đã đọc */
+    .notification-item.read {
+        background-color: #f0f8ff; /* Xanh nhạt cho thông báo đã đọc */
+    }
+
+    /* Màu nền cho thông báo chưa đọc */
+    .notification-item.unread {
+        background-color: #ffffff; /* Trắng cho thông báo chưa đọc */
+    }
