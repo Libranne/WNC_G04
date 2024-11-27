@@ -1,0 +1,33 @@
+﻿/* Container của danh sách chủ đề */
+.topic-container {
+    margin-top: 20px;
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Mỗi chủ đề */
+.topic-item {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #555;
+    background-color: #f9f9f9;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+    .topic-item:hover {
+        background-color: #efefef;
+        border-color: #bbb;
+        color: #000;
+    }
+
+    /* Chủ đề đang được chọn */
+    .topic-item.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #0056b3;
+    }
