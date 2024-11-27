@@ -88,8 +88,47 @@
                         </li>
                         <li class="navbar-items">
                             <i class="fa-regular fa-heart iconsize"></i>
-                            <a class="navbar-link">Thông báo</a>
+                            <a class="navbar-link" id="notificationToggle">Thông báo</a>
                         </li>
+                        <div id="notificationContainer" style="display: none; position: absolute; top: 60px; left: 20px; background: #fff; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 300px; z-index: 1000;">
+                            <div style="padding: 10px;">
+                                <h4>Thông báo</h4>
+                                <ul id="notificationList" style="list-style: none; padding: 0; margin: 0;">
+                                    <!-- Thêm thông báo tại đây -->
+                                </ul>
+                            </div>
+                        </div>
+                        <script>
+                            $(document).ready(function () {
+                                // Xử lý toggle thông báo
+                                $('#notificationToggle').on('click', function () {
+                                    $('#notificationContainer').toggle();
+                                });
+
+                                // Đóng thông báo nếu nhấn ra ngoài container
+                                $(document).on('click', function (e) {
+                                    if (!$(e.target).closest('#notificationContainer, #notificationToggle').length) {
+                                        $('#notificationContainer').hide();
+                                    }
+                                });
+
+                                // (Tùy chọn) Gửi AJAX để lấy thông báo từ server khi người dùng mở thông báo
+                                $('#notificationToggle').on('click', function () {
+                                    if ($('#notificationContainer').is(':visible')) {
+                                        $.get('/Notifications/GetUserNotifications', function (data) {
+                                            $('#notificationList').empty();
+                                            if (data && data.length) {
+                                                data.forEach(notification => {
+                                                    $('#notificationList').append(`<li>${notification.content}</li>`);
+                                                });
+                                            } else {
+                                                $('#notificationList').append('<li>Không có thông báo mới.</li>');
+                                            }
+                                        });
+                                    }
+                                });
+                            });
+                        </script>
                         <li class="navbar-items">
                             <i class="fa-solid fa-plus iconsize"></i>
                             <a data-bs-toggle="modal" data-bs-target="#create_modal" href="" class="navbar-link">Tạo</a>

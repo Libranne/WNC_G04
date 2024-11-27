@@ -14,6 +14,33 @@ namespace WNC_G04.Controllers
             _context = context;
         }
 
+        public IActionResult GetPostsByTopic(int MaChuDe)
+        {
+            var currentUserEmail = HttpContext.Session.GetString("Email");
+            var currentUser = _context.NguoiDungs.FirstOrDefault(t => t.Email == currentUserEmail);
+
+            if (currentUser == null) return Json(new { success = false });
+
+            var baiViets = _context.BaiViets
+                .Where(b => b.MaChuDe == MaChuDe)
+                .Select(b => new BaiViet
+                {
+                    MaBaiViet = b.MaBaiViet,
+                    MaNguoiDung = b.MaNguoiDung,
+                    TenNguoiDung = b.MaNguoiDungNavigation.TenNguoiDung,
+                    AnhDaiDien = b.MaNguoiDungNavigation.AnhDaiDien,
+                    TenChuDe = b.MaChuDeNavigation.TenChuDe,
+                    NoiDung = b.NoiDung,
+                    AnhBaiViet = b.AnhBaiViet,
+                    NgayTao = b.NgayTao ?? DateTime.Now,
+                    IsLiked = _context.Thiches.Any(t => t.MaBaiViet == b.MaBaiViet && t.MaNguoiDung == currentUser.MaNguoiDung),
+                    SoLuongLike = b.SoLuongLike
+                }).ToList();
+
+            // Trả về một phần của view (partial view) chứa các bài viết của topic
+            return PartialView("_PostListPartial", baiViets);
+        }
+
         public IActionResult Index(int? MaChuDe)
         {
             var currentUserEmail = HttpContext.Session.GetString("Email");
@@ -24,7 +51,7 @@ namespace WNC_G04.Controllers
 
             if (MaChuDe == null && topics.Count > 0)
             {
-                MaChuDe = topics.First().MaChuDe; // Chọn topic đầu tiên nếu không có topicID
+                MaChuDe = topics.First().MaChuDe;
             }
 
             var baiViets = _context.BaiViets
@@ -39,7 +66,6 @@ namespace WNC_G04.Controllers
                     NoiDung = b.NoiDung,
                     AnhBaiViet = b.AnhBaiViet,
                     NgayTao = b.NgayTao ?? DateTime.Now,
-                    Thiches = b.Thiches,
                     IsLiked = _context.Thiches.Any(t => t.MaBaiViet == b.MaBaiViet && t.MaNguoiDung == us.MaNguoiDung),
                     SoLuongLike = b.SoLuongLike
                 }).ToList();
@@ -56,7 +82,7 @@ namespace WNC_G04.Controllers
                 }).ToList();
 
             ViewBag.SelectedTopicID = MaChuDe;
-            ViewBag.us = us; // Thông tin người dùng hiện tại
+            ViewBag.us = us;
             ViewBag.cmts = comments;
 
             return View(baiViets);
@@ -66,37 +92,26 @@ namespace WNC_G04.Controllers
         public IActionResult LikePost(int mabaiviet)
         {
             var currentUserEmail = HttpContext.Session.GetString("Email");
-            var currentUser = _context.NguoiDungs
-                .FirstOrDefault(t => t.Email == currentUserEmail);
-            var existingLike = _context.Thiches
-                .FirstOrDefault(t => t.MaBaiViet == mabaiviet && t.MaNguoiDung == currentUser.MaNguoiDung);
-            var baiviet = _context.BaiViets
-                .FirstOrDefault(t => t.MaBaiViet == mabaiviet);
+            var currentUser = _context.NguoiDungs.FirstOrDefault(t => t.Email == currentUserEmail);
+            var baiviet = _context.BaiViets.FirstOrDefault(t => t.MaBaiViet == mabaiviet);
+
+            if (baiviet == null || currentUser == null) return Json(new { success = false });
+
+            var existingLike = _context.Thiches.FirstOrDefault(t => t.MaBaiViet == mabaiviet && t.MaNguoiDung == currentUser.MaNguoiDung);
 
             if (existingLike != null)
             {
-                // Nếu đã like rồi, bỏ like và giảm số lượng
                 baiviet.SoLuongLike--;
                 _context.Thiches.Remove(existingLike);
 
-                // Xoá thông báo nếu có
-                var thongBao = _context.ThongBaos
-                    .FirstOrDefault(t => t.MaNguoiDung == baiviet.MaNguoiDung && t.MaBaiViet == mabaiviet && t.LoaiThongBao == "Thich");
+                var thongBao = _context.ThongBaos.FirstOrDefault(t => t.MaNguoiDung == baiviet.MaNguoiDung && t.MaBaiViet == mabaiviet && t.LoaiThongBao == "Thich");
                 if (thongBao != null)
                 {
                     _context.ThongBaos.Remove(thongBao);
                 }
-
-                _context.SaveChanges();
-                return Json(new
-                {
-                    success = true,
-                    newLikeCount = baiviet.SoLuongLike
-                });
             }
             else
             {
-                // Thêm like mới và tăng số lượng
                 var like = new Thich
                 {
                     MaBaiViet = mabaiviet,
@@ -105,62 +120,62 @@ namespace WNC_G04.Controllers
                 baiviet.SoLuongLike++;
                 _context.Thiches.Add(like);
 
-                // Tạo thông báo cho người dùng bài viết
-                var thongBao = new ThongBao
+                if (baiviet.MaNguoiDung != currentUser.MaNguoiDung)
                 {
-                    MaNguoiDung = baiviet.MaNguoiDung, // Người tạo bài viết
-                    NoiDung = $"{currentUser.TenNguoiDung} đã thích bài viết của bạn.",
-                    NgayTao = DateTime.Now,  // Gán ngày tạo cho thông báo
-                    LoaiThongBao = "Thich",  // Loại thông báo
-                    MaBaiViet = mabaiviet    // Gán bài viết liên quan
-                };
-
-                _context.ThongBaos.Add(thongBao);
-
-                _context.SaveChanges();
-                return Json(new
-                {
-                    success = true,
-                    newLikeCount = baiviet.SoLuongLike
-                });
+                    var thongBao = new ThongBao
+                    {
+                        MaNguoiDung = baiviet.MaNguoiDung,
+                        NoiDung = $"{currentUser.TenNguoiDung} đã thích bài viết của bạn.",
+                        NgayTao = DateTime.Now,
+                        LoaiThongBao = "Thich",
+                        MaBaiViet = mabaiviet
+                    };
+                    _context.ThongBaos.Add(thongBao);
+                }
             }
+
+            _context.SaveChanges();
+
+            return Json(new
+            {
+                success = true,
+                newLikeCount = baiviet.SoLuongLike
+            });
         }
-
-
 
         [HttpPost]
         public IActionResult AddComment(int mabaiviet, string comment)
         {
             var currentUserEmail = HttpContext.Session.GetString("Email");
-            var currentUser = _context.NguoiDungs
-                .FirstOrDefault(t => t.Email == currentUserEmail);
+            var currentUser = _context.NguoiDungs.FirstOrDefault(t => t.Email == currentUserEmail);
+            var baiviet = _context.BaiViets.FirstOrDefault(b => b.MaBaiViet == mabaiviet);
+
+            if (baiviet == null || currentUser == null) return Json(new { success = false });
+
             var cmt = new BinhLuan
             {
                 MaBaiViet = mabaiviet,
                 MaNguoiDung = currentUser.MaNguoiDung,
                 NoiDung = comment,
-                NgayTao = DateTime.Now  // Đảm bảo có NgayTao
+                NgayTao = DateTime.Now
             };
 
             _context.BinhLuans.Add(cmt);
-            _context.SaveChanges();
 
-            // Tạo thông báo cho người sở hữu bài viết
-            var baiviet = _context.BaiViets.FirstOrDefault(b => b.MaBaiViet == mabaiviet);
-            if (baiviet != null)
+            if (baiviet.MaNguoiDung != currentUser.MaNguoiDung)
             {
                 var thongBao = new ThongBao
                 {
-                    MaNguoiDung = baiviet.MaNguoiDung, // Người tạo bài viết
+                    MaNguoiDung = baiviet.MaNguoiDung,
                     NoiDung = $"{currentUser.TenNguoiDung} đã bình luận về bài viết của bạn.",
-                    NgayTao = DateTime.Now,  // Gán ngày tạo cho thông báo
-                    LoaiThongBao = "BinhLuan",  // Loại thông báo
-                    MaBaiViet = mabaiviet  // Gán bài viết liên quan
+                    NgayTao = DateTime.Now,
+                    LoaiThongBao = "BinhLuan",
+                    MaBaiViet = mabaiviet
                 };
-
                 _context.ThongBaos.Add(thongBao);
-                _context.SaveChanges();
             }
+
+            _context.SaveChanges();
 
             return Json(new
             {
@@ -169,8 +184,19 @@ namespace WNC_G04.Controllers
             });
         }
 
+        public IActionResult GetNotifications()
+        {
+            var currentUserEmail = HttpContext.Session.GetString("Email");
+            var currentUser = _context.NguoiDungs.FirstOrDefault(t => t.Email == currentUserEmail);
 
+            if (currentUser == null) return Json(new { success = false });
 
+            var notifications = _context.ThongBaos
+                .Where(t => t.MaNguoiDung == currentUser.MaNguoiDung)
+                .OrderByDescending(t => t.NgayTao)
+                .ToList();
 
+            return Json(notifications);
+        }
     }
 }
