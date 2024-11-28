@@ -1,0 +1,84 @@
+﻿@model IEnumerable<WNC_G04.Models.ChuDe>
+@{
+    ViewBag.Title = "Chẻ đề ";
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+}
+<h1>Danh sách Chủ Đề</h1>
+
+<div class="container">
+    @foreach (var item in Model)
+    {
+        <div class="record">
+            <div class="card" data-id="@item.MaChuDe">
+                <div class="card-body">
+                    <h5 class="card-title">Mã Chủ Đề: @item.MaChuDe</h5>
+                    <p class="card-text">Tên Chủ Đề: @item.TenChuDe</p>
+                    <p class="card-text">VerifyKey: @item.VerifyKey</p>
+                    <a href="@Url.Action("Edit", new { id = item.MaChuDe })" class="btn btn-warning">Sửa</a>
+                    <button class="btn btn-danger btn-delete" data-id="@item.MaChuDe">Xóa</button>
+                </div>
+            </div>
+
+
+        </div>
+    }
+</div>
+<link rel="stylesheet" href="~/css/thi.css">
+@section Scripts {
+    <script>
+        document.querySelectorAll('.btn-delete').forEach(button => {
+            button.addEventListener('click', function () {
+                const id = this.dataset.id;
+
+                // Hiện thông báo xác nhận xóa
+                if (!confirm('Bạn có chắc chắn muốn xóa chủ đề này không?')) {
+                    return;
+                }
+
+                // Gửi yêu cầu xóa bằng AJAX
+                fetch(`/ChuDe/Delete/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json(); // Trả về dữ liệu JSON từ server
+                        } else {
+                            throw new Error('Xóa thất bại. Hãy thử lại!');
+                        }
+                    })
+                    .then(data => {
+                        alert(data.message); // Hiển thị thông báo xóa thành công
+
+                        // Tìm và xóa thẻ HTML chứa bản ghi đã bị xóa
+                        const card = document.querySelector(`.card[data-id="${id}"]`);
+                        if (card) {
+                            card.remove(); // Xóa phần tử khỏi giao diện
+                        }
+                    })
+                    .catch(error => {
+                        alert(error.message); // Hiển thị lỗi nếu có
+                    });
+            });
+        });
+    </script>
+
+
+
+}
+
+
+
+@* 
+<style>
+    .card {
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style> *@
+
+

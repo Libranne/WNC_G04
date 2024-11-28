@@ -1,0 +1,45 @@
+﻿@model WNC_G04.Models.ChuDe
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/Layout.cshtml";
+
+}
+
+<h1>Sửa Chủ Đề</h1>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="MaChuDe" class="control-label"></label>
+        <input asp-for="MaChuDe" class="form-control" readonly />
+        <span asp-validation-for="MaChuDe" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TenChuDe" class="control-label"></label>
+        <input asp-for="TenChuDe" class="form-control" />
+        <span asp-validation-for="TenChuDe" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="VerifyKey" class="control-label"></label>
+        <input asp-for="VerifyKey" class="form-control" />
+        <span asp-validation-for="VerifyKey" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+</form>
+
+<a href="@Url.Action("Index")" class="btn btn-secondary mt-2">Quay lại danh sách</a>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const verifyKeyInput = document.querySelector('#VerifyKey');
+        const verifyKey = verifyKeyInput.value;
+
+        // Kiểm tra độ dài và chữ số đầu tiên
+        const regex = /^\d.{9}$/; // Đảm bảo có 10 ký tự và bắt đầu bằng số
+
+        if (!regex.test(verifyKey)) {
+            e.preventDefault();
+            alert('VerifyKey phải có 10 ký tự và bắt đầu bằng một chữ số.');
+        }
+    });
+</script>
